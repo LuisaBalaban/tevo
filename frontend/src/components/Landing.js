@@ -7,7 +7,7 @@ import mic from '../images/mic.png'
 import down from '../images/down.png'
 import ScriptTag from 'react-script-tag';
 import animationData from '../images/animation.json';
-
+import axios from 'axios'
 import Lottie from './Lottie.js'
 import './components.css'
 import './boot-strap.css'
@@ -20,11 +20,18 @@ class Landing extends Component {
             link: ""
         }
         this.handleChange = this.handleChange.bind(this)
+        this.start = this.start.bind(this);
     }
-    handleChange(event) {
-        const { name, value } = event.target
+    handleChange(event) {      
+          const { name, value } = event.target
         this.setState({ [name]: value })
     }
+    start()
+    {
+        axios.post('http://localhost:3000/start').then(response => {
+            console.log(response)})
+    }
+    
     render() {
         return (
             <html>
@@ -46,7 +53,7 @@ class Landing extends Component {
                                     <div id="leftSide">
                                     <div class="row">
                                         <h1>We’re ready to listen</h1>
-                                       <button  id="mic"><image src={mic}></image></button>
+                                       <button  id="mic" onClick={this.start}></button>
                                        </div>
                                         <h1>Discussion topic</h1>
                                         <h1>Key points</h1>
