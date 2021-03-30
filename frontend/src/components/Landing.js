@@ -29,17 +29,18 @@ class Landing extends Component {
     start()
     {
         axios.post('http://localhost:3000/start').then(response => {
-            console.log(response)})
+            console.log(response)}).catch(error => {
+                console.log(error.response)})
     }
     
     render() {
         return (
-            <html>
+            <div>
 
                 <head>
                     <title>tevo</title>
                 </head>
-                <body>
+                <div>
                     <section>
                         <h2 id="text">Have better conversations</h2>
                         <img src={background} id="bck"></img>
@@ -81,9 +82,9 @@ class Landing extends Component {
                             </div>
                         </div>
                     </div>
-                </body>
+                </div>
 
-            </html>)
+            </div>)
     }
 }
 export default Landing

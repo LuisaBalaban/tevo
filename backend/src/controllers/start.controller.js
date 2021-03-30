@@ -1,7 +1,7 @@
 
-const userInfo=require('./userInfo.js')
+const userInfo = require('./userInfo.js')
 require('dotenv').config()
-const {sdk} = require('symbl-node')
+const { sdk } = require('symbl-node')
 const uuid = require('uuid').v4
 // For demo purposes, we're using mic to simply get audio from microphone and pass it on to websocket connection
 const mic = require('mic')
@@ -20,7 +20,8 @@ const micInstance = mic({
   exitOnSilence: 6,
 });
 
-const startListening = async () =>{
+const startListening = async (req,res) => {
+
   try {
     // Initialize the SDK
     await sdk.init({
@@ -54,7 +55,7 @@ const startListening = async () =>{
          */
         onSpeechDetected: (data) => {
           if (data) {
-            const {punctuated} = data
+            const { punctuated } = data
             console.log('Live: ', punctuated && punctuated.transcript)
             console.log('');
           }
@@ -80,7 +81,7 @@ const startListening = async () =>{
         }
       }
     });
-    
+
     const micInputStream = micInstance.getAudioStream()
     /** Raw audio stream */
     micInputStream.on('data', (data) => {
@@ -112,16 +113,14 @@ const startListening = async () =>{
         console.log('Connection Stopped.')
       } catch (e) {
         return response.status(404).json({
-          msg:"Error while stopping the connection."
-      })
+          msg: "Error while stopping the connection."
+        })
       }
     }, 60 * 1000) // Stop connection after 1 minute i.e. 60 secs
-    return res.status(200).json({msg:'authentification successful'});
+    return res.status(200).json({ msg: 'authentification successful' });
 
   } catch (e) {
-    return response.status(404).json({
-      msg:"couldn't start"
-  })
+    return res.status(404).json({ msg: 'couldnt start conenction' });
+  }
 }
-}
-module.exports={startListening}
+module.exports = { startListening }
